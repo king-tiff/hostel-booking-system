@@ -27,7 +27,11 @@ Then set your database details (username, DB name, password)
 php artisan key:generate
 ```
 
-4. Run the servers
+4. Create Database
+```
+php artisan migrate
+```
+5. Run the servers
 ```
 php artisan serve 
 ```
