@@ -3,3 +3,35 @@ A modern and user-friendly hostel booking system built with laravel with Vue. Th
 # Dependencies
 This project uses Laravel 10, Vue 3, and TailwindCSS 3
 You should have Composer and Node (npm) installed
+
+# Installation
+After cloning,
+
+1. Install both Laravel dependencies and Vue (Node) dependencies 
+```
+composer install
+```
+```
+npm install
+```
+
+2. Configure `.env`
+
+```
+cp .env.example .env 
+```
+Then set your database details (username, DB name, password)
+
+3. Generate app key
+```
+php artisan key:generate
+```
+
+4. Run the servers
+```
+php artisan serve 
+```
+
+```
+npm run dev
+```
