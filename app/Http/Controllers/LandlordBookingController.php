@@ -7,7 +7,7 @@ use App\Models\Booking;
 use App\Models\Room;
 use Inertia\Inertia;
 
-class BookingController extends Controller
+class LandlordBookingController extends Controller
 {
     /**
      * Display a listing of the resource.

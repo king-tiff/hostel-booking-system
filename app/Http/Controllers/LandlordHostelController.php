@@ -6,7 +6,7 @@ use App\Models\Hostel;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class HostelController extends Controller
+class LandlordHostelController extends Controller
 {
     /**
      * Display a listing of the resource.

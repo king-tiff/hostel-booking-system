@@ -232,6 +232,30 @@ const showingNavigationDropdown = ref(false);
                                 <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
                             </svg>
                         </SidebarItem>
+                        <template v-if="$page.props.auth.roles[0].name === 'admin'">
+                            <SidebarItem href="/landlord/hostel/" title="Hostel Managment">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-home"
+                            >
+                                <path
+                                    d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                                ></path>
+                                <polyline
+                                    points="9 22 9 12 15 12 15 22"
+                                ></polyline>
+                            </svg>
+                        </SidebarItem>
+                        </template>
+                        <template v-if="$page.props.auth.roles[0].name === 'landlord'">
                         <SidebarItem href="/landlord/hostel/" title="Hostel Managment">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -300,6 +324,7 @@ const showingNavigationDropdown = ref(false);
                                 <line x1="3" y1="10" x2="21" y2="10"></line>
                             </svg>
                         </SidebarItem>
+                    </template>
                     </ul>
                 </div>
             </aside>
