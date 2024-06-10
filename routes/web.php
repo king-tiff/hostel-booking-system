@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\HostelController;
+use App\Http\Controllers\LandlordBookingController;
+use App\Http\Controllers\LandlordHostelController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RoomController;
+use App\Http\Controllers\LandlordRoomController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -41,32 +41,32 @@ Route::middleware('auth')->group(function () {
     });
 
     //LANDLORD
-    Route::middleware('role:admin|landlord')->group(function () {
+    Route::middleware('role:landlord')->group(function () {
         
         //Hostels
-        Route::get('/landlord/hostel/', [HostelController::class, 'index'])->name('landlord.hostel');
-        Route::get('/landlord/add-hostel', [HostelController::class, 'create'])->name('landlord.hostel.create');
-        Route::post('/landlord/add-hostel', [HostelController::class, 'store'])->name('landlord.hostel.store');
-        Route::get('/landlord/{hostels}/edit', [HostelController::class, 'edit'])->name('landlord.hostel.edit');
-        Route::put('/landlord/{hostels}/edit', [HostelController::class, 'update'])->name('landlord.hostel.update');
-        Route::delete('/landlord/{hostels}/delete', [HostelController::class, 'destroy'])->name('landlord.hostel.destroy');
+        Route::get('/landlord/hostel/', [LandlordHostelController::class, 'index'])->name('landlord.hostel');
+        Route::get('/landlord/add-hostel', [LandlordHostelController::class, 'create'])->name('landlord.hostel.create');
+        Route::post('/landlord/add-hostel', [LandlordHostelController::class, 'store'])->name('landlord.hostel.store');
+        Route::get('/landlord/{hostels}/edit', [LandlordHostelController::class, 'edit'])->name('landlord.hostel.edit');
+        Route::put('/landlord/{hostels}/edit', [LandlordHostelController::class, 'update'])->name('landlord.hostel.update');
+        Route::delete('/landlord/{hostels}/delete', [LandlordHostelController::class, 'destroy'])->name('landlord.hostel.destroy');
 
 
         //Rooms
-        Route::get('/landlord/rooms/', [RoomController::class, 'index'])->name('landlord.rooms.index');
-        Route::get('/landlord/rooms/add-room', [RoomController::class, 'create'])->name('landlord.room.create');
-        Route::post('/landlord/rooms/add-room', [RoomController::class, 'store'])->name('landlord.room.store');
-        Route::get('/landlord/rooms/{room}/edit', [RoomController::class, 'edit'])->name('landlord.room.edit');
-        Route::put('/landlord/rooms/{room}/edit', [RoomController::class, 'update'])->name('landlord.room.update');
-        Route::delete('/landlord/rooms/{room}/delete', [RoomController::class, 'destroy'])->name('landlord.room.destroy');
+        Route::get('/landlord/rooms/', [LandlordRoomController::class, 'index'])->name('landlord.rooms.index');
+        Route::get('/landlord/rooms/add-room', [LandlordRoomController::class, 'create'])->name('landlord.room.create');
+        Route::post('/landlord/rooms/add-room', [LandlordRoomController::class, 'store'])->name('landlord.room.store');
+        Route::get('/landlord/rooms/{room}/edit', [LandlordRoomController::class, 'edit'])->name('landlord.room.edit');
+        Route::put('/landlord/rooms/{room}/edit', [LandlordRoomController::class, 'update'])->name('landlord.room.update');
+        Route::delete('/landlord/rooms/{room}/delete', [LandlordRoomController::class, 'destroy'])->name('landlord.room.destroy');
 
         //Bookings
-        Route::get('/landlord/bookings/', [BookingController::class, 'index'])->name('landlord.bookings.index');
-        Route::get('/landlord/bookings/add-booking', [BookingController::class, 'create'])->name('landlord.bookings.create');
-        Route::post('/landlord/bookings/add-booking', [BookingController::class, 'store'])->name('landlord.bookings.store');
-        Route::get('/landlord/bookings/{booking}/edit', [BookingController::class, 'edit'])->name('landlord.bookings.edit');
-        Route::put('/landlord/bookings/{booking}/edit', [BookingController::class, 'update'])->name('landlord.bookings.update');
-        Route::delete('/landlord/bookings/{booking}/delete', [BookingController::class, 'destroy'])->name('landlord.bookings.destroy');
+        Route::get('/landlord/bookings/', [LandlordBookingController::class, 'index'])->name('landlord.bookings.index');
+        Route::get('/landlord/bookings/add-booking', [LandlordBookingController::class, 'create'])->name('landlord.bookings.create');
+        Route::post('/landlord/bookings/add-booking', [LandlordBookingController::class, 'store'])->name('landlord.bookings.store');
+        Route::get('/landlord/bookings/{booking}/edit', [LandlordBookingController::class, 'edit'])->name('landlord.bookings.edit');
+        Route::put('/landlord/bookings/{booking}/edit', [LandlordBookingController::class, 'update'])->name('landlord.bookings.update');
+        Route::delete('/landlord/bookings/{booking}/delete', [LandlordBookingController::class, 'destroy'])->name('landlord.bookings.destroy');
     });
 
     // USER

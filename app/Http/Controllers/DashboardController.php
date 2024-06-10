@@ -18,11 +18,18 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $hostels = Hostel::where('user_id', auth()->id())->with('rooms.bookings')->get();
+        // $hostels = Hostel::where('user_id', auth()->id())->with('rooms.bookings')->get();
 
-        return Inertia::render('Landlord/LandlordDashboard', [
-            'hostels' => $hostels
-        ]);
+        // return Inertia::render('Landlord/LandlordDashboard', [
+        //     'hostels' => $hostels
+        // ]);
+        if (auth()->user()->hasRole('admin')) {
+            return Inertia::render('Admin/Dashboard');
+        } else if (auth()->user()->hasRole('landlord')) {
+            return Inertia::render('Landlord/Dashboard');
+        } else {
+            return Inertia::render('User/Dashboard');
+        }
     }
 
     /**

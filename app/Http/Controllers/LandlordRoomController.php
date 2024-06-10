@@ -7,7 +7,7 @@ use App\Models\Room;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class RoomController extends Controller
+class LandlordRoomController extends Controller
 {
     /**
      * Display a listing of the resource.
