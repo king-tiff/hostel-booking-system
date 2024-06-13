@@ -2,40 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Booking;
-use App\Models\Hostel;
-use App\Models\Room;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Booking;
 use Inertia\Inertia;
 
-
-
-class DashboardController extends Controller
+class AdminBookingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        if (auth()->user()->hasRole('admin')) {
-            $totalHostels = Hostel::count();
-            $totalRooms = Room::count();
-            $totalBookings = Booking::count();
-            $totalUsers = User::count();
+        $bookings = Booking::orderBy('created_at', 'desc')->get();
 
-            return Inertia::render('Admin/Dashboard', [
-                'totalHostels' => $totalHostels,
-                'totalRooms' => $totalRooms,
-                'totalBookings' => $totalBookings,
-                'totalUsers' => $totalUsers,
-            ]);
-        } else if (auth()->user()->hasRole('landlord')) {
-            return Inertia::render('Landlord/Dashboard');
-        } else {
-            return Inertia::render('User/Dashboard');
-        }
+        return Inertia::render('Admin/BookingManagement', [
+            'bookings' => $bookings,
+        ]);
     }
 
     /**
