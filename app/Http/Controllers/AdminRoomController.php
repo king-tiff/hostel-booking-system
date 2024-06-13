@@ -7,24 +7,19 @@ use App\Models\Room;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class LandlordRoomController extends Controller
+class AdminRoomController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user_id = auth()->id();
-
         $rooms = Room::with('hostel')
-            ->whereHas('hostel', function ($query) use ($user_id) {
-                $query->where('user_id', $user_id);
-            })
-            ->orderBy('created_at', 'desc')
-            ->get();
-        return Inertia::render('Landlord/RoomManagement', [
-            'rooms' => $rooms,
-        ]);
+        ->orderBy('created_at', 'desc')
+        ->get();
+    return Inertia::render('Admin/RoomManagement', [
+        'rooms' => $rooms,
+    ]);
     }
 
     /**
@@ -32,8 +27,8 @@ class LandlordRoomController extends Controller
      */
     public function create()
     {
-        $hostels = Hostel::where('user_id', auth()->id())->get();
-        return Inertia::render('Landlord/AddRoom', [
+        $hostels = Hostel::all();
+        return Inertia::render('Admin/AddRoom', [
             'hostels' => $hostels,
         ]);
     }
@@ -52,9 +47,8 @@ class LandlordRoomController extends Controller
 
         Room::create($formFields);
 
-        return redirect('/landlord/rooms')->with('flash', 'Room created successfully.');
+        return redirect('/admin/rooms')->with('flash', 'Room created successfully.');
     }
-
 
     /**
      * Display the specified resource.
@@ -69,13 +63,12 @@ class LandlordRoomController extends Controller
      */
     public function edit(Room $room)
     {
-        $hostels = Hostel::where('user_id', auth()->id())->get();
-        return Inertia::render('Landlord/EditRoom', [
+        $hostels = Hostel::all();
+        return Inertia::render('Admin/EditRoom', [
             'room' => $room,
             'hostels' => $hostels
         ]);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -92,7 +85,7 @@ class LandlordRoomController extends Controller
 
         $room->update($formFields);
 
-        return redirect()->route('landlord.rooms.index')->with('flash', 'Room updated successfully.');
+        return redirect()->route('admin.rooms.index')->with('flash', 'Room updated successfully.');
     }
 
     /**
@@ -101,6 +94,6 @@ class LandlordRoomController extends Controller
     public function destroy(Room $room)
     {
         $room->delete();
-        return redirect('/landlord/rooms/')->with('flash', 'Hostel deleted successfully');
+        return redirect('/admin/rooms/')->with('flash', 'Hostel deleted successfully');
     }
 }
