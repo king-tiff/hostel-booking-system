@@ -36,6 +36,19 @@
                     <InputError class="mt-2" :message="form.errors.price" />
                 </div>
                 <div class="mt-4">
+                    <InputLabel for="duration" value="Duration" />
+                    <select
+                        id="duration"
+                        class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full"
+                        v-model="form.duration"
+                    >
+                        <option value="Month">Per Month</option>
+                        <option value="Semister">Per Semister</option>
+                        <option value="Six Months">Per Six Months</option>
+                    </select>
+                    <InputError class="mt-2" :message="form.errors.duration" />
+                </div>
+                <div class="mt-4">
                     <InputLabel for="hostelName" value="Hostel Name" />
                     <select
                         id="hostelName"
@@ -136,6 +149,7 @@ const form = useForm({
     type: props.room.type,
     price: props.room.price,
     status: props.room.status,
+    duration: props.room.duration,
     description: props.room.description,
 });
 

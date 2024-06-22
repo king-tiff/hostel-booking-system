@@ -14,6 +14,7 @@ class Room extends Model
         'type',
         'price',
         'description',
+        'duration',
         'status',
     ];
     public function hostel()
@@ -23,5 +24,9 @@ class Room extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+    public function images()
+    {
+        return $this->hasMany(RoomImage::class);
     }
 }
