@@ -47,6 +47,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/hostels/', [AdminHostelController::class, 'index'])->name('admin.hostels.index');
         Route::get('/admin/add-hostel', [AdminHostelController::class, 'create'])->name('admin.hostel.create');
         Route::post('/admin/add-hostel', [AdminHostelController::class, 'store'])->name('admin.hostel.store');
+        Route::get('/admin/hostel/{id}', [AdminHostelController::class, 'show'])->name('admin.hostel.show');
+        Route::post('/admin/hostel/{id}/add-image', [AdminHostelController::class, 'addImage'])->name('admin.hostel.addImage');
+        Route::delete('/admin/hostel/image/{id}', [AdminHostelController::class, 'deleteImage'])->name('admin.hostel.deleteImage');
         Route::get('/admin/{hostels}/edit', [AdminHostelController::class, 'edit'])->name('admin.hostel.edit');
         Route::put('/admin/{hostels}/edit', [AdminHostelController::class, 'update'])->name('admin.hostel.update');
         Route::delete('/admin/{hostels}/delete', [AdminHostelController::class, 'destroy'])->name('admin.hostel.destroy');
@@ -55,6 +58,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/rooms/', [AdminRoomController::class, 'index'])->name('admin.rooms.index');
         Route::get('/admin/rooms/add-room', [AdminRoomController::class, 'create'])->name('admin.room.create');
         Route::post('/admin/rooms/add-room', [AdminRoomController::class, 'store'])->name('admin.room.store');
+        Route::get('/admin/rooms/{id}', [AdminRoomController::class, 'show'])->name('admin.room.show');
+        Route::post('/admin/rooms/{id}/add-image', [AdminRoomController::class, 'addImage'])->name('admin.room.addImage');
+        Route::delete('/admin/rooms/image/{id}', [AdminRoomController::class, 'deleteImage'])->name('admin.room.deleteImage');
         Route::get('/admin/rooms/{room}/edit', [AdminRoomController::class, 'edit'])->name('admin.room.edit');
         Route::put('/admin/rooms/{room}/edit', [AdminRoomController::class, 'update'])->name('admin.room.update');
         Route::delete('/admin/rooms/{room}/delete', [AdminRoomController::class, 'destroy'])->name('admin.room.destroy');
@@ -81,9 +87,12 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:landlord')->group(function () {
 
         //Hostels
-        Route::get('/landlord/hostel/', [LandlordHostelController::class, 'index'])->name('landlord.hostel');
+        Route::get('/landlord/hostel/', [LandlordHostelController::class, 'index'])->name('landlord.hostel.index');
         Route::get('/landlord/add-hostel', [LandlordHostelController::class, 'create'])->name('landlord.hostel.create');
         Route::post('/landlord/add-hostel', [LandlordHostelController::class, 'store'])->name('landlord.hostel.store');
+        Route::get('/landlord/hostel/{id}', [LandlordHostelController::class, 'show'])->name('landlord.hostel.show');
+        Route::post('/landlord/hostel/{id}/add-image', [LandlordHostelController::class, 'addImage'])->name('landlord.hostel.addImage');
+        Route::delete('/landlord/hostel/image/{id}', [LandlordHostelController::class, 'deleteImage'])->name('landlord.hostel.deleteImage');
         Route::get('/landlord/{hostels}/edit', [LandlordHostelController::class, 'edit'])->name('landlord.hostel.edit');
         Route::put('/landlord/{hostels}/edit', [LandlordHostelController::class, 'update'])->name('landlord.hostel.update');
         Route::delete('/landlord/{hostels}/delete', [LandlordHostelController::class, 'destroy'])->name('landlord.hostel.destroy');
@@ -93,6 +102,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/landlord/rooms/', [LandlordRoomController::class, 'index'])->name('landlord.rooms.index');
         Route::get('/landlord/rooms/add-room', [LandlordRoomController::class, 'create'])->name('landlord.room.create');
         Route::post('/landlord/rooms/add-room', [LandlordRoomController::class, 'store'])->name('landlord.room.store');
+        Route::get('/landlord/rooms/{id}', [LandlordRoomController::class, 'show'])->name('landlord.room.show');
+        Route::post('/landlord/rooms/{id}/add-image', [LandlordRoomController::class, 'addImage'])->name('landlord.room.addImage');
+        Route::delete('/landlord/rooms/image/{id}', [LandlordRoomController::class, 'deleteImage'])->name('landlord.room.deleteImage');
         Route::get('/landlord/rooms/{room}/edit', [LandlordRoomController::class, 'edit'])->name('landlord.room.edit');
         Route::put('/landlord/rooms/{room}/edit', [LandlordRoomController::class, 'update'])->name('landlord.room.update');
         Route::delete('/landlord/rooms/{room}/delete', [LandlordRoomController::class, 'destroy'])->name('landlord.room.destroy');

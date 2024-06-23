@@ -8,7 +8,7 @@
 
             <form @submit.prevent="form.post(route('landlord.hostel.store'))" class="mt-6 space-y-6">
                 <div>
-                    <InputLabel for="name" value="Name" />
+                    <InputLabel for="name" value="Hostel Name" />
                     <TextInput
                         id="name"
                         type="text"
@@ -19,7 +19,7 @@
                     <InputError class="mt-2" :message="form.errors.name" />
                 </div>
                 <div>
-                    <InputLabel for="location" value="Location" />
+                    <InputLabel for="location" value="Hostel Location" />
                     <TextInput
                         id="location"
                         type="text"
@@ -30,7 +30,7 @@
                     <InputError class="mt-2" :message="form.errors.location" />
                 </div>
                 <div>
-                    <InputLabel for="description" value="Description" />
+                    <InputLabel for="description" value="Hostel Description" />
                     <TextareaInput
                         id="description"
                         type="text"
@@ -40,6 +40,18 @@
                         autocomplete="job-requirements"
                     />
                     <InputError class="mt-2" :message="form.errors.description" />
+                </div>
+                <div>
+                    <InputLabel for="image" value="Hostel Images" />
+
+                    <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        @input="form.image = $event.target.files[0]"
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.image" />
                 </div>
 
                 <div class="flex items-center gap-4">
@@ -79,5 +91,6 @@
         name: '',
         location: '',
         description: '',
+        image: '',
     });
 </script>

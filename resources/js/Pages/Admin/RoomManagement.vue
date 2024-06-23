@@ -28,7 +28,7 @@
             </Card>
             <Card
                 class="fill-main-primary"
-                label="Pending Rooms"
+                label="Full Rooms"
                 :value="fullRooms"
             >
                 <template v-slot:icon>

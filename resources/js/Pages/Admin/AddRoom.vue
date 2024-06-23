@@ -8,7 +8,11 @@
                 </h2>
             </header>
 
-            <form @submit.prevent="submitForm" class="mt-6 space-y-6">
+            <form
+                @submit.prevent="submitForm"
+                class="mt-6 space-y-6"
+                enctype="multipart/form-data"
+            >
                 <div class="mt-4">
                     <InputLabel for="roomType" value="Room Type" />
                     <select
@@ -34,6 +38,19 @@
                         required
                     />
                     <InputError class="mt-2" :message="form.errors.price" />
+                </div>
+                <div class="mt-4">
+                    <InputLabel for="duration" value="Duration" />
+                    <select
+                        id="duration"
+                        class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full"
+                        v-model="form.duration"
+                    >
+                        <option value="Month">Per Month</option>
+                        <option value="Semister">Per Semister</option>
+                        <option value="Six Months">Per Six Months</option>
+                    </select>
+                    <InputError class="mt-2" :message="form.errors.duration" />
                 </div>
                 <div class="mt-4">
                     <InputLabel for="hostelName" value="Hostel Name" />
@@ -63,7 +80,22 @@
                         placeholder="Enter Room Descriptions"
                         autocomplete="description"
                     />
-                    <InputError class="mt-2" :message="form.errors.description" />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.description"
+                    />
+                </div>
+                <div>
+                    <InputLabel for="image" value="Room Images" />
+
+                    <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        @input="form.image = $event.target.files[0]"
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.image" />
                 </div>
 
                 <div class="flex items-center gap-4">
@@ -108,13 +140,15 @@ const props = defineProps({
 });
 
 const form = useForm({
-    hostel_id: '',
-    type: '',
-    price: '',
-    description: '',
+    hostel_id: "",
+    type: "",
+    price: "",
+    description: "",
+    duration: "",
+    image: "",
 });
 
 const submitForm = () => {
-    form.post(route('admin.room.store'));
+    form.post(route("admin.room.store"));
 };
 </script>

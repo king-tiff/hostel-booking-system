@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Hostel;
 use Illuminate\Http\Request;
+use App\Models\HostelImage;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 
@@ -40,22 +42,71 @@ class AdminHostelController extends Controller
             'location' => 'required|string|max:255',
             'description' => 'nullable|string',
             'is_verified' => 'required|boolean',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+
         ]);
+        // Add the user ID to the form fields
         $formFields['user_id'] = auth()->user()->id;
 
-        Hostel::create($formFields);
+        // Create the hostel
+        $hostel = Hostel::create($formFields);
 
-        return redirect()->route('admin.hostels.index')->with('flash', 'Hostel created successfully.');
+        // Handle the image upload
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('uploads', 'public');
+
+            // Create the hostel image entry
+            HostelImage::create([
+                'hostel_id' => $hostel->id,
+                'image_path' => $imagePath,
+            ]);
+        }
+
+        return redirect('/admin/hostel/')->with('flash', 'Hostel created successfully.');
     }
+
+
     /**
      * Display the specified resource.
      */
-    // public function show(Hostel $hostel)
-    // {
-    //     return Inertia::render('Admin/Hostels/Show', [
-    //         'hostel' => $hostel
-    //     ]);
-    // }
+    public function show($id)
+    {
+        $hostel = Hostel::with('images','user')->findOrFail($id);
+        return Inertia::render('Admin/HostelDetail', ['hostel' => $hostel]);
+    }
+
+    /**
+     * Add Hostel Images.
+     */
+    public function addImage(Request $request, $id)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $hostel = Hostel::findOrFail($id);
+        $imagePath = $request->file('image')->store('uploads', 'public');
+
+        HostelImage::create([
+            'hostel_id' => $hostel->id,
+            'image_path' => $imagePath,
+        ]);
+
+        return back()->with('flash', 'Image added successfully.');
+    }
+
+    /**
+     * Delete Image From Hostel
+     */
+    public function deleteImage($id)
+    {
+        $image = HostelImage::findOrFail($id);
+        Storage::disk('public')->delete($image->image_path);
+        $image->delete();
+
+        return back()->with('flash', 'Image deleted successfully.');
+    }
+
 
     /**
      * Show the form for editing the specified resource.

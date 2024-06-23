@@ -6,6 +6,8 @@ use App\Models\Hostel;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
+use App\Models\RoomImage;
 
 class AdminRoomController extends Controller
 {
@@ -38,26 +40,77 @@ class AdminRoomController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the request data including the image file
         $formFields = $request->validate([
             'hostel_id' => 'required|exists:hostels,id',
-            'type' => 'required',
+            'type' => 'required|string',
             'price' => 'required|numeric',
-            'description' => 'required|string'
+            'duration' => 'required|string',
+            'description' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Room::create($formFields);
+        // Handle the image upload
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('uploads', 'public');
+
+            // Create the room with the form fields
+            $room = Room::create($formFields);
+
+            // Create the room image entry
+            RoomImage::create([
+                'room_id' => $room->id,
+                'image_path' => $imagePath,
+            ]);
+        } else {
+            // Create the room without an image
+            Room::create($formFields);
+        }
 
         return redirect('/admin/rooms')->with('flash', 'Room created successfully.');
     }
 
+
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $room = Room::with('images','hostel')->findOrFail($id);
+        return Inertia::render('Admin/RoomDetail', ['room' => $room]);
     }
 
+    /**
+     * Add Room Images.
+     */
+    public function addImage(Request $request, $id)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $room = Room::findOrFail($id);
+        $imagePath = $request->file('image')->store('uploads', 'public');
+
+        RoomImage::create([
+            'room_id' => $room->id,
+            'image_path' => $imagePath,
+        ]);
+
+        return back()->with('flash', 'Image added successfully.');
+    }
+
+    /**
+     * Delete Image From Room
+     */
+    public function deleteImage($id)
+    {
+        $image = RoomImage::findOrFail($id);
+        Storage::disk('public')->delete($image->image_path);
+        $image->delete();
+
+        return back()->with('flash', 'Image deleted successfully.');
+    }
     /**
      * Show the form for editing the specified resource.
      */
