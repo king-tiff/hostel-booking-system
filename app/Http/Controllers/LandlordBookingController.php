@@ -75,6 +75,14 @@ class LandlordBookingController extends Controller
             'status' => 'required|in:Approved,Rejected'
         ]);
 
+        // room_id 
+        // room = Room::find(room_id)
+        // (room->count - booking_count = 1) {
+            //  room->status = 0;
+            // room->save();
+        //}
+
+
         $booking->update($data);
 
         return redirect()->route('landlord.bookings.index')->with('flash', 'Booking updated successfully.');

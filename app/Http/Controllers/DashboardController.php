@@ -34,7 +34,15 @@ class DashboardController extends Controller
         } else if (auth()->user()->hasRole('landlord')) {
             return Inertia::render('Landlord/Dashboard');
         } else {
-            return Inertia::render('User/Dashboard');
+
+            $bookings = Booking::with(['room.hostel'])
+                ->where('user_id', auth()->id())
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            return Inertia::render('User/Dashboard', [
+                'bookings' => $bookings,
+            ]);
         }
     }
 

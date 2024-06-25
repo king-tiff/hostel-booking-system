@@ -50,6 +50,18 @@
 
                     <InputError class="mt-2" :message="form.errors.is_verified" />
                 </div>
+                <div>
+                    <InputLabel for="image" value="Hostel Images" />
+
+                    <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        @input="form.image = $event.target.files[0]"
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.image" />
+                </div>
 
                 <div class="flex items-center gap-4">
                     <div>
@@ -91,5 +103,6 @@
         location: '',
         description: '',
         is_verified: '',
+        image: '',
     });
 </script>
