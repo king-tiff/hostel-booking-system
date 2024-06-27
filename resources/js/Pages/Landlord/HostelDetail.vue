@@ -3,7 +3,8 @@
         <Head :title="`Hostel: ${hostel.name}`" />
         <div class="p-6 bg-white rounded-lg shadow-md mb-6">
             <h1 class="text-2xl font-bold mb-4">{{ hostel.name }}</h1>
-            <p class="mb-4">{{ hostel.description }}</p>
+            <p class="mb-4"><span class="font-bold">Description: </span>{{ hostel.description }}</p>
+            <p class="mb-4"><span class="font-bold">Mobile Number: </span>{{ hostel.number }}</p>
 
             <div class="mb-4">
                 <h2 class="text-xl font-semibold mb-2">Images</h2>

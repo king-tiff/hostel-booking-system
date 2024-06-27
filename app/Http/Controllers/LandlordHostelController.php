@@ -36,6 +36,7 @@ class LandlordHostelController extends Controller
     {
         $formFields = $request->validate([
             'name' => 'required|string|max:255',
+            'number' => 'required|integer',
             'location' => 'required|string|max:255',
             'description' => 'nullable|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -118,6 +119,7 @@ class LandlordHostelController extends Controller
     {
         $formFields = $request->validate([
             'name' => 'required',
+            'number' => 'required|integer',
             'location' => 'required',
             'description' => 'required',
 

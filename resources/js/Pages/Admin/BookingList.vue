@@ -1,6 +1,5 @@
 <template>
     <Head title="Bookings" />
-    <!-- <AuthenticatedLayout> -->
         <section class="mx-auto bg-white rounded p-10">
             <header>
                 <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">
@@ -76,8 +75,8 @@
                             class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                         >
 
-                        <!-- <div class="flex items-center space-x-4 text-sm">
-                            <Link :href="route('admin.bookings.edit', booking.id)"
+                        <div class="flex items-center space-x-4 text-sm">
+                            <Link :href="route('landlord.bookings.edit', booking.id)"
                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-main-primary rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                 aria-label="Edit">
                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -86,13 +85,12 @@
                                     </path>
                                 </svg>
                             </Link>
-                        </div> -->
+                        </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </section>
-    <!-- </AuthenticatedLayout> -->
 </template>
 
 <script setup>

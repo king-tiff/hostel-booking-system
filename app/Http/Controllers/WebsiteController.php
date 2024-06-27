@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Room;
 use Illuminate\Http\Request;
-use App\Models\Booking;
 use Inertia\Inertia;
 
-class AdminBookingController extends Controller
+class WebsiteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $bookings = Booking::with(['user', 'room.hostel'])->orderBy('created_at', 'desc')->get();
-
-        return Inertia::render('Admin/BookingManagement', [
-            'bookings' => $bookings,
+        $rooms = Room::where('status', true)
+            ->whereHas('hostel', function ($query) {
+                $query->where('is_verified', true);
+            })
+            ->with(['images', 'hostel'])
+            ->get();
+            
+        return Inertia::render('Welcome', [
+            'rooms' => $rooms,
         ]);
     }
 
@@ -39,10 +44,19 @@ class AdminBookingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show($id)
+{
+    $room = Room::with('hostel', 'images')->findOrFail($id);
+    $availableSpaces = $room->availableSpaces();
+    $nextAvailableDate = $room->nextAvailableDate();
+
+    return Inertia::render('Home/RoomShow', [
+        'room' => $room,
+        'available_spaces' => $availableSpaces,
+        'next_available_date' => $nextAvailableDate,
+    ]);
+}
+
 
     /**
      * Show the form for editing the specified resource.

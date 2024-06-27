@@ -32,9 +32,26 @@ class DashboardController extends Controller
                 'totalUsers' => $totalUsers,
             ]);
         } else if (auth()->user()->hasRole('landlord')) {
-            return Inertia::render('Landlord/Dashboard');
+            // return Inertia::render('Landlord/Dashboard');
+            $bookings = Booking::with(['user', 'room.hostel'])
+            ->whereHas('room.hostel', function ($query) {
+                $query->where('user_id', auth()->id());
+            })
+            ->get();
+
+        return Inertia::render('Landlord/Dashboard', [
+            'bookings' => $bookings,
+        ]);
         } else {
-            return Inertia::render('User/Dashboard');
+
+            $bookings = Booking::with(['room.hostel'])
+                ->where('user_id', auth()->id())
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            return Inertia::render('User/Dashboard', [
+                'bookings' => $bookings,
+            ]);
         }
     }
 

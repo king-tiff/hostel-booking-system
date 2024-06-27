@@ -1,38 +1,72 @@
 <template>
-    <div class="p-6 bg-white rounded-lg shadow-md mb-6">
-        <table class="w-full table-auto">
-            <thead>
+    <Head title="Bookings" />
+    <section class="mx-auto bg-white rounded p-10">
+        <header>
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                User Bookings
+            </h2>
+        </header>
+        <table class="min-w-full divide-y divide-gray-200 mt-6">
+            <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-4 py-2">Hostel Name</th>
-                    <th class="px-4 py-2">Room Type</th>
-                    <th class="px-4 py-2">Status</th>
-                    <th class="px-4 py-2">Price</th>
-                    <th class="px-4 py-2">Duration</th>
-                    <th class="px-4 py-2">Action</th>
+                    <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                        Room
+                    </th>
+                    <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                        Hostel
+                    </th>
+                    <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                        Start Date
+                    </th>
+                    <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                        End Date
+                    </th>
+                    <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                        Status
+                    </th>
+                    <th scope="col" class="relative px-6 py-3">
+                        <span class="sr-only">Actions</span>
+                    </th>
                 </tr>
             </thead>
-            <tbody>
-                <tr v-for="(room, index) in rooms" :key="index">
-                    <td class="border px-4 py-2">{{ room.hostel.name }}</td>
-                    <td class="border px-4 py-2">{{ room.type }} Bed</td>
-                    <td class="border px-4 py-2">
-                        <span
-                            :class="{
-                                'text-green-600 bg-green-100/90': room.status,
-                                'text-main-primary bg-main-secondary':
-                                    !room.status,
-                            }"
-                            class="px-2 py-1 font-semibold leading-tight rounded-full"
-                        >
-                            {{ room.status ? "Available" : "Closed" }}
-                        </span>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr v-for="booking in bookings" :key="booking.id">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {{ booking.room.type }} Room
                     </td>
-                    <td class="border px-4 py-2">{{ room.price }}</td>
-                    <td class="border px-4 py-2">Per {{ room.duration }}</td>
-                    <td class="border px-4 py-2">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {{ booking.room.hostel.name }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {{ booking.check_in_date }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {{ booking.check_out_date }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {{ booking.status }}
+                    </td>
+                    <td
+                        class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
+                    >
                         <div class="flex items-center space-x-4 text-sm">
                             <Link
-                                :href="route('landlord.room.show', room.id)"
+                                :href="route('bookings.show', booking.id)"
                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-main-primary rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                 aria-label="Show"
                             >
@@ -55,7 +89,8 @@
                                 </svg>
                             </Link>
                             <Link
-                                :href="route('landlord.room.edit', room.id)"
+                                v-if="booking.status !== 'Approved'"
+                                :href="route('bookings.edit', booking.id)"
                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-main-primary rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                 aria-label="Edit"
                             >
@@ -72,7 +107,7 @@
                             </Link>
                             <Button
                                 type="danger"
-                                @click="showConfirmationModal(room.id)"
+                                @click="showConfirmationModal(booking.id)"
                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-main-primary rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                 aria-label="Delete"
                             >
@@ -94,15 +129,18 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+        <div class="flex justify-end mb-4">
+            <LinkButton :href="route('bookings.view')" title="Add Booking" />
+        </div>
+    </section>
     <Modal :show="isDeleteModalOpen" @close="closeModal">
         <div class="p-6">
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                Are you sure you want to delete this Room?
+                Are you sure you want to delete this Booking?
             </h2>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                You will lose everything related to this Room.
+                You will lose everything related to this Booking.
             </p>
 
             <div class="mt-6 flex justify-end">
@@ -113,7 +151,7 @@
                     class="ms-3"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
-                    @click="deletehostelPost(selectedhostelPost)"
+                    @click="deleteBooking(selectedBooking)"
                 >
                     Delete Room
                 </Button>
@@ -123,35 +161,32 @@
 </template>
 
 <script setup>
+import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { Link, useForm } from "@inertiajs/vue3";
-import Modal from "@/Components/Modal.vue";
 import Button from "@/Components/Button.vue";
+import Modal from "@/Components/Modal.vue";
+import LinkButton from "@/Components/LinkButton.vue";
 
-defineProps({
-    rooms: {
-        type: Object,
-        required: true,
-    },
+const props = defineProps({
+    bookings: Array,
 });
 
 const isDeleteModalOpen = ref(false);
-const selectedhostelPost = ref(null);
-const isVerifyModalOpen = ref(false);
+const selectedBooking = ref(null);
 const form = useForm({ id: null });
 
-const showConfirmationModal = (room) => {
+const showConfirmationModal = (booking) => {
     isDeleteModalOpen.value = true;
-    selectedhostelPost.value = room;
+    selectedBooking.value = booking;
 };
 
 const closeModal = () => {
     isDeleteModalOpen.value = false;
-    isVerifyModalOpen.value = false;
 };
 
-const deletehostelPost = (room) => {
-    form.delete(route("landlord.room.destroy", room), {
+const deleteBooking = (booking) => {
+    form.delete(route("bookings.destroy", booking), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
     });

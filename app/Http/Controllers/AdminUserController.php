@@ -61,7 +61,7 @@ class AdminUserController extends Controller
     
         event(new Registered($user));
     
-        return redirect()->route('users')->with('flash', 'User created successfully.');
+        return redirect()->route('admin.users.index')->with('flash', 'User created successfully.');
     }
 
     /**
@@ -98,7 +98,7 @@ class AdminUserController extends Controller
         $user->update($request->all());
         $user->assignRole($formFields['role']);
 
-        return redirect()->route('users', $user)->with('flash', 'User updated successfully.');
+        return redirect()->route('admin.users.index', $user)->with('flash', 'User updated successfully.');
     }
 
     public function resetPassword(User $user)
@@ -107,7 +107,7 @@ class AdminUserController extends Controller
             'password' => Hash::make('12345678'),
         ]);
 
-        return redirect()->route('users')->with('flash', 'User password reseted successfully.');
+        return redirect()->route('admin.users.index')->with('flash', 'User password reseted successfully.');
     }
 
     /**
@@ -117,6 +117,6 @@ class AdminUserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('users')->with('flash', 'User deleted successfully.');
+        return redirect()->route('admin.users.index')->with('flash', 'User deleted successfully.');
     }
 }

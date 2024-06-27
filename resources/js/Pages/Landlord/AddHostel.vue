@@ -3,10 +3,15 @@
     <AuthenticatedLayout>
         <section class="mx-auto bg-white rounded p-10">
             <header>
-                <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">Add Hostel</h2>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                    Add Hostel
+                </h2>
             </header>
 
-            <form @submit.prevent="form.post(route('landlord.hostel.store'))" class="mt-6 space-y-6">
+            <form
+                @submit.prevent="form.post(route('landlord.hostel.store'))"
+                class="mt-6 space-y-6"
+            >
                 <div>
                     <InputLabel for="name" value="Hostel Name" />
                     <TextInput
@@ -17,6 +22,17 @@
                         required
                     />
                     <InputError class="mt-2" :message="form.errors.name" />
+                </div>
+                <div>
+                    <InputLabel for="number" value="Mobile Number" />
+                    <TextInput
+                        id="number"
+                        type="number"
+                        class="mt-1 block w-full rounded-none rounded-r-md"
+                        v-model="form.number"
+                        required
+                    />
+                    <InputError class="mt-2" :message="form.errors.number" />
                 </div>
                 <div>
                     <InputLabel for="location" value="Hostel Location" />
@@ -39,7 +55,10 @@
                         placeholder="Enter Room Descriptions"
                         autocomplete="job-requirements"
                     />
-                    <InputError class="mt-2" :message="form.errors.description" />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.description"
+                    />
                 </div>
                 <div>
                     <InputLabel for="image" value="Hostel Images" />
@@ -79,18 +98,19 @@
 </template>
 
 <script setup>
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-    import { Head, useForm } from '@inertiajs/vue3';
-    import InputError from '@/Components/InputError.vue';
-    import InputLabel from '@/Components/InputLabel.vue';
-    import Button from '@/Components/Button.vue';
-    import TextInput from '@/Components/TextInput.vue';
-    import TextareaInput from '@/Components/TextareaInput.vue';
-    
-    const form = useForm({
-        name: '',
-        location: '',
-        description: '',
-        image: '',
-    });
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head, useForm } from "@inertiajs/vue3";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import Button from "@/Components/Button.vue";
+import TextInput from "@/Components/TextInput.vue";
+import TextareaInput from "@/Components/TextareaInput.vue";
+
+const form = useForm({
+    name: "",
+    number: "",
+    location: "",
+    description: "",
+    image: "",
+});
 </script>

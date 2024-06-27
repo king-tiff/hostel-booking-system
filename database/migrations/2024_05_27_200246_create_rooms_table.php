@@ -16,8 +16,10 @@ return new class extends Migration
             $table->foreignId('hostel_id')->constrained()->onDelete('cascade');
             $table->string('type');
             $table->decimal('price', 10, 2);
-            $table->text('duration')->nullable();
-            $table->text('description')->nullable();
+            $table->integer('num_of_rooms');
+            $table->integer('num_of_beds_per_room');
+            $table->text('duration');
+            $table->text('description');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

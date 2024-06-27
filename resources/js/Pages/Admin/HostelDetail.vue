@@ -3,7 +3,7 @@
         <Head :title="`Hostel: ${hostel.name}`" />
         <div class="p-6 bg-white rounded-lg shadow-md mb-6">
             <h1 class="text-2xl font-bold mb-4">{{ hostel.name }}</h1>
-            <h3 class="mb-4">Owner: {{ hostel.user.name }}</h3>
+            <h3 class="mb-4"><span class="font-bold">Owner: </span>{{ hostel.user.name }}</h3>
 
             <div class="mb-4">
                 <h2 class="text-xl font-semibold mb-2">Images</h2>
@@ -42,8 +42,14 @@
                     </div>
                 </div>
             </div>
-            <p class="mb-4">{{ hostel.description }}</p>
-
+            <p class="mb-4">
+                <span class="font-bold">Mobile Number: </span
+                >{{ hostel.number }}
+            </p>
+            <p class="mb-4">
+                <span class="font-bold">Hostel Description: </span
+                >{{ hostel.description }}
+            </p>
 
             <form
                 @submit.prevent="submitForm"

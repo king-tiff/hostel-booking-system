@@ -127,6 +127,7 @@
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                     </div>
                 </div>
+                <a href="/bookings/14/download">Dow</a>
             </div>
         </div>
     </body>
