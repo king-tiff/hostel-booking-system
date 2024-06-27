@@ -3,7 +3,9 @@
     <AuthenticatedLayout>
         <section class="mx-auto bg-white rounded p-10">
             <header>
-                <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">Edit Hostel</h2>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                    Edit Hostel
+                </h2>
             </header>
 
             <form @submit.prevent="submitForm" class="mt-6 space-y-6">
@@ -17,6 +19,17 @@
                         required
                     />
                     <InputError class="mt-2" :message="form.errors.name" />
+                </div>
+                <div>
+                    <InputLabel for="number" value="Mobile Number" />
+                    <TextInput
+                        id="number"
+                        type="number"
+                        class="mt-1 block w-full rounded-none rounded-r-md"
+                        v-model="form.number"
+                        required
+                    />
+                    <InputError class="mt-2" :message="form.errors.number" />
                 </div>
                 <div>
                     <InputLabel for="location" value="Location" />
@@ -39,12 +52,17 @@
                         placeholder="Enter Room Descriptions"
                         autocomplete="job-requirements"
                     />
-                    <InputError class="mt-2" :message="form.errors.description" />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.description"
+                    />
                 </div>
 
                 <div class="flex items-center gap-4">
                     <div>
-                        <Button :disabled="form.processing">Update Hostel</Button>
+                        <Button :disabled="form.processing"
+                            >Update Hostel</Button
+                        >
                     </div>
 
                     <Transition
@@ -67,29 +85,30 @@
 </template>
 
 <script setup>
-    import { ref, defineProps } from 'vue';
-    import { useForm } from '@inertiajs/vue3';
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-    import InputError from '@/Components/InputError.vue';
-    import InputLabel from '@/Components/InputLabel.vue';
-    import Button from '@/Components/Button.vue';
-    import TextInput from '@/Components/TextInput.vue';
-    import TextareaInput from '@/Components/TextareaInput.vue';
+import { ref, defineProps } from "vue";
+import { useForm } from "@inertiajs/vue3";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import Button from "@/Components/Button.vue";
+import TextInput from "@/Components/TextInput.vue";
+import TextareaInput from "@/Components/TextareaInput.vue";
 
-    const props = defineProps({
-        hostels: {
-            type: Object,
-            required: true,
-        },
-    });
+const props = defineProps({
+    hostels: {
+        type: Object,
+        required: true,
+    },
+});
 
-    const form = useForm({
-        name: ref(props.hostels.name),
-        location: ref(props.hostels.location),
-        description: ref(props.hostels.description),
-    });
+const form = useForm({
+    name: ref(props.hostels.name),
+    number: ref(props.hostels.number),
+    location: ref(props.hostels.location),
+    description: ref(props.hostels.description),
+});
 
-    const submitForm = () => {
-        form.put(route('landlord.hostel.update', props.hostels.id));
-    };
+const submitForm = () => {
+    form.put(route("landlord.hostel.update", props.hostels.id));
+};
 </script>

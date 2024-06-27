@@ -21,6 +21,12 @@
             </div>
             <div class="mb-4">
                 <p class="text-gray-700">
+                    <span class="font-bold">Number of Beds in a Room:</span>
+                    {{ booking.room.num_of_beds_per_room }}
+                </p>
+            </div>
+            <div class="mb-4">
+                <p class="text-gray-700">
                     <span class="font-bold">Room Price:</span>
                     {{ booking.room.price }}
                 </p>
@@ -60,13 +66,29 @@
                     <span class="font-bold">Status:</span> {{ booking.status }}
                 </p>
             </div>
+
+            <div v-if="booking.status == 'Approved'" class="mb-4">
+                <p class="text-gray-700">
+                    <span class="font-bold">Mobile Number:</span>
+                    {{ booking.room.hostel.number }}
+                </p>
+            </div>
+
+            <div v-if="booking.status == 'Approved'" class="mt-4">
+                <a
+                    :href="route('bookings.download', booking.id)"
+                    class="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg"
+                >
+                    Download Report
+                </a>
+            </div>
         </section>
     </AuthenticatedLayout>
 </template>
 
 <script setup>
 import { defineProps } from "vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 const props = defineProps({

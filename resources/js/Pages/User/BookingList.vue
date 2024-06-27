@@ -89,6 +89,7 @@
                                 </svg>
                             </Link>
                             <Link
+                                v-if="booking.status !== 'Approved'"
                                 :href="route('bookings.edit', booking.id)"
                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-main-primary rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                 aria-label="Edit"
@@ -104,27 +105,90 @@
                                     ></path>
                                 </svg>
                             </Link>
+                            <Button
+                                type="danger"
+                                @click="showConfirmationModal(booking.id)"
+                                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-main-primary rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                aria-label="Delete"
+                            >
+                                <svg
+                                    class="w-5 h-5"
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                            </Button>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
         <div class="flex justify-end mb-4">
-          <LinkButton
-            :href="route('bookings.view')"
-            title="Add Booking"
-        />  
+            <LinkButton :href="route('bookings.view')" title="Add Booking" />
         </div>
-        
     </section>
+    <Modal :show="isDeleteModalOpen" @close="closeModal">
+        <div class="p-6">
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                Are you sure you want to delete this Booking?
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                You will lose everything related to this Booking.
+            </p>
+
+            <div class="mt-6 flex justify-end">
+                <Button type="secondary" @click="closeModal"> Cancel </Button>
+
+                <Button
+                    type="danger"
+                    class="ms-3"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                    @click="deleteBooking(selectedBooking)"
+                >
+                    Delete Room
+                </Button>
+            </div>
+        </div>
+    </Modal>
 </template>
 
 <script setup>
 import { Head } from "@inertiajs/vue3";
-import { Link } from "@inertiajs/vue3";
+import { ref } from "vue";
+import { Link, useForm } from "@inertiajs/vue3";
+import Button from "@/Components/Button.vue";
+import Modal from "@/Components/Modal.vue";
 import LinkButton from "@/Components/LinkButton.vue";
 
 const props = defineProps({
     bookings: Array,
 });
+
+const isDeleteModalOpen = ref(false);
+const selectedBooking = ref(null);
+const form = useForm({ id: null });
+
+const showConfirmationModal = (booking) => {
+    isDeleteModalOpen.value = true;
+    selectedBooking.value = booking;
+};
+
+const closeModal = () => {
+    isDeleteModalOpen.value = false;
+};
+
+const deleteBooking = (booking) => {
+    form.delete(route("bookings.destroy", booking), {
+        preserveScroll: true,
+        onSuccess: () => closeModal(),
+    });
+};
 </script>

@@ -2,7 +2,9 @@
     <AuthenticatedLayout>
         <Head :title="`Room: ${room.type}`" />
         <div class="p-6 bg-white rounded-lg shadow-md mb-6">
-            <h1 class="text-2xl font-bold mb-4">{{ room.type }} Room, {{ room.hostel.name }}</h1>
+            <h1 class="text-2xl font-bold mb-4">
+                {{ room.type }} Room, {{ room.hostel.name }}
+            </h1>
 
             <div class="mb-4">
                 <h2 class="text-xl font-semibold mb-2">Images</h2>
@@ -41,10 +43,30 @@
                     </div>
                 </div>
             </div>
-            <p class="mb-4">{{ room.description }}</p>
-            <p class="mb-4">{{ room.price }} / {{ room.duration }}</p>
-
-
+            <p class="mb-4">
+                <span class="font-bold">Room Description: </span
+                >{{ room.description }}
+            </p>
+            <p class="mb-4">
+                <span class="font-bold">Room Price: </span>{{ room.price }} /
+                {{ room.duration }}
+            </p>
+            <p class="text-gray-700 mb-4">
+                <span class="font-bold">Number of Beds Per Room: </span>
+                {{ room.num_of_beds_per_room }}
+            </p>
+            <div v-if="available_spaces > 0">
+                <p class="text-gray-700 mb-4">
+                <span class="font-bold">Number of Spaces Left: </span>
+                {{ available_spaces }}
+            </p>
+            </div>
+            <div v-else>
+                <p class="text-red-600">
+                    Rooms are fully booked. Next available date:
+                    {{ formattedNextAvailableDate }}
+                </p>
+            </div>
             <form
                 @submit.prevent="submitForm"
                 enctype="multipart/form-data"
@@ -113,6 +135,14 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    available_spaces: {
+        type: Number,
+        required: true,
+    },
+    next_available_date: {
+        type: String,
+        required: false,
+    },
 });
 
 const form = useForm({
@@ -145,4 +175,8 @@ const deleteImagePost = (imageId) => {
         onSuccess: () => closeModal(),
     });
 };
+
+const formattedNextAvailableDate = props.next_available_date
+    ? format(addDays(new Date(props.next_available_date), 1), "MMMM d, yyyy")
+    : "N/A";
 </script>

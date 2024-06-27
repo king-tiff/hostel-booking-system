@@ -3,7 +3,6 @@
 
     <UnauthenticatedLayout>
         <div class="max-w-4xl mx-auto my-10">
-
             <div class="mb-8">
                 <h1 class="text-3xl font-semibold mb-4">
                     {{ room.type }} Room
@@ -26,13 +25,25 @@
                     />
                 </div>
             </div>
-            <p class="text-gray-700">{{ room.description }}</p>
-            <Link
-                :href="route('bookings.request', room.id)"
-                target="_blank"
-                class="my-5 w-full inline-flex items-center px-4 justify-center py-2 border rounded-md font-semibold text-xs uppercase tracking-widest shadow-sm disabled:opacity-25 transition ease-in-out duration-150 bg-main-primary text-white border-transparent hover:bg-main-primary-darker dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                >Request Booking</Link
-            >   
+            <p class="text-gray-700"><span class="font-bold">Description: </span>{{ room.description }}</p>
+            <p class="text-gray-700">
+                    <span class="font-bold">Available Spaces:</span>
+                    {{ available_spaces }}
+                </p>
+            <div v-if="available_spaces > 0">
+                <Link
+                    :href="route('bookings.request', room.id)"
+                    target="_blank"
+                    class="my-5 w-full inline-flex items-center px-4 justify-center py-2 border rounded-md font-semibold text-xs uppercase tracking-widest shadow-sm disabled:opacity-25 transition ease-in-out duration-150 bg-main-primary text-white border-transparent hover:bg-main-primary-darker dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >Request Booking</Link
+                >
+            </div>
+            <div v-else>
+                <p class="text-red-600">
+                    Rooms are fully booked. Next available date:
+                    {{ formattedNextAvailableDate }}
+                </p>
+            </div>
 
             <div class="mt-4 flex items-center">
                 <Link :href="route('home')" class="text-blue-500 mr-2">
@@ -54,23 +65,31 @@
                 </Link>
                 <span>Back to Rooms</span>
             </div>
-            </div>
+        </div>
     </UnauthenticatedLayout>
 </template>
 
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import UnauthenticatedLayout from "@/Layouts/UnauthenticatedLayout.vue";
-import Button from "@/Components/Button.vue";
+import { format, addDays } from "date-fns";
 
 const props = defineProps({
     room: {
         type: Object,
         required: true,
     },
+    available_spaces: {
+        type: Number,
+        required: true,
+    },
+    next_available_date: {
+        type: String,
+        required: false,
+    },
 });
-</script>
 
-<style scoped>
-/* Add any custom styles here */
-</style>
+const formattedNextAvailableDate = props.next_available_date
+    ? format(addDays(new Date(props.next_available_date), 1), "MMMM d, yyyy")
+    : "N/A";
+</script>

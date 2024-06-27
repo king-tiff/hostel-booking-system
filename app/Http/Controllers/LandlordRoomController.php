@@ -50,6 +50,8 @@ class LandlordRoomController extends Controller
             'hostel_id' => 'required|exists:hostels,id',
             'type' => 'required|string',
             'price' => 'required|numeric',
+            'num_of_rooms' => 'required|numeric',
+            'num_of_beds_per_room' => 'required|numeric',
             'duration' => 'required|string',
             'description' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -81,8 +83,15 @@ class LandlordRoomController extends Controller
      */
     public function show($id)
     {
-        $room = Room::with('images','hostel')->findOrFail($id);
-        return Inertia::render('Landlord/RoomDetail', ['room' => $room]);
+        $room = Room::with('images', 'hostel')->findOrFail($id);
+        $availableSpaces = $room->availableSpaces();
+        $nextAvailableDate = $room->nextAvailableDate();
+
+        return Inertia::render('Landlord/RoomDetail', [
+            'room' => $room,
+            'available_spaces' => $availableSpaces,
+            'next_available_date' => $nextAvailableDate,
+        ]);
     }
 
     /**
@@ -142,6 +151,8 @@ class LandlordRoomController extends Controller
             'duration' => 'required|string',
             'description' => 'required|string',
             'status' => 'required|boolean',
+            'num_of_rooms' => 'required|numeric',
+            'num_of_beds_per_room' => 'required|numeric',
         ]);
 
         $room->update($formFields);

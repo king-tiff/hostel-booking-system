@@ -17,11 +17,11 @@ class AdminRoomController extends Controller
     public function index()
     {
         $rooms = Room::with('hostel')
-        ->orderBy('created_at', 'desc')
-        ->get();
-    return Inertia::render('Admin/RoomManagement', [
-        'rooms' => $rooms,
-    ]);
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return Inertia::render('Admin/RoomManagement', [
+            'rooms' => $rooms,
+        ]);
     }
 
     /**
@@ -45,6 +45,8 @@ class AdminRoomController extends Controller
             'hostel_id' => 'required|exists:hostels,id',
             'type' => 'required|string',
             'price' => 'required|numeric',
+            'num_of_rooms' => 'required|numeric',
+            'num_of_beds_per_room' => 'required|numeric',
             'duration' => 'required|string',
             'description' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -76,8 +78,15 @@ class AdminRoomController extends Controller
      */
     public function show($id)
     {
-        $room = Room::with('images','hostel')->findOrFail($id);
-        return Inertia::render('Admin/RoomDetail', ['room' => $room]);
+        $room = Room::with('images', 'hostel')->findOrFail($id);
+        $availableSpaces = $room->availableSpaces();
+        $nextAvailableDate = $room->nextAvailableDate();
+
+        return Inertia::render('Admin/RoomDetail', [
+            'room' => $room,
+            'available_spaces' => $availableSpaces,
+            'next_available_date' => $nextAvailableDate,
+        ]);
     }
 
     /**
@@ -132,7 +141,10 @@ class AdminRoomController extends Controller
             'hostel_id' => 'required|exists:hostels,id',
             'type' => 'required',
             'price' => 'required|numeric',
+            'num_of_rooms' => 'required|numeric',
+            'num_of_beds_per_room' => 'required|numeric',
             'description' => 'required|string',
+            'duration' => 'required|string',
             'status' => 'required|boolean',
         ]);
 

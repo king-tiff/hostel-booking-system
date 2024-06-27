@@ -6,6 +6,7 @@ use App\Models\Room;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Booking;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
@@ -80,10 +81,16 @@ class BookingController extends Controller
     {
         $booking = Booking::with(['room.hostel', 'user'])->findOrFail($id);
 
+        $availableSpaces = $booking->room->availableSpaces();
+        $nextAvailableDate = $booking->room->nextAvailableDate();
+
         return Inertia::render('User/ShowBooking', [
             'booking' => $booking,
+            'available_spaces' => $availableSpaces,
+            'next_available_date' => $nextAvailableDate,
         ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -124,12 +131,20 @@ class BookingController extends Controller
         return redirect()->route('bookings.user')->with('success', 'Booking updated successfully.');
     }
 
+    public function download($id)
+    {
+        $booking = Booking::with('room.hostel')->findOrFail($id);
+        $pdf = Pdf::loadView('booking.report', compact('booking'));
+        return $pdf->download('booking_report.pdf');
+        // return view('booking.report', compact('booking'));
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Booking $booking)
     {
-        //
+        $booking->delete();
+        return redirect('/my-bookings')->with('flash', 'Booking Deleted Successful');
     }
 }

@@ -29,6 +29,7 @@ use Inertia\Inertia;
 
 Route::get('/', [WebsiteController::class, 'index'])->name('home');
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/rooms/{id}', [WebsiteController::class, 'show'])->name('room.show');
 
@@ -46,6 +47,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
         Route::get('/bookings/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
         Route::put('/bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
+        Route::get('/bookings/{id}/download', [BookingController::class, 'download'])->name('bookings.download');
+        Route::delete('bookings/{booking}/delete', [BookingController::class, 'destroy'])->name('bookings.destroy');
     });
     // ADMIN
     Route::middleware('role:admin')->group(function () {
@@ -91,7 +94,7 @@ Route::middleware('auth')->group(function () {
     });
 
     //LANDLORD
-    Route::middleware('role:landlord')->group(function () {
+    Route::middleware('role:landlord|admin')->group(function () {
 
         //Hostels
         Route::get('/landlord/hostel/', [LandlordHostelController::class, 'index'])->name('landlord.hostel.index');

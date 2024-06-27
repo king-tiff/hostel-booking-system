@@ -29,6 +29,37 @@
                     <InputError class="mt-2" :message="form.errors.type" />
                 </div>
                 <div>
+                    <InputLabel for="num_of_rooms" value="Number of Rooms" />
+                    <TextInput
+                        id="num_of_rooms"
+                        type="number"
+                        class="mt-1 block w-full"
+                        v-model="form.num_of_rooms"
+                        required
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.num_of_rooms"
+                    />
+                </div>
+                <div>
+                    <InputLabel
+                        for="num_of_beds_per_room"
+                        value="Number of beds per Room"
+                    />
+                    <TextInput
+                        id="num_of_beds_per_room"
+                        type="number"
+                        class="mt-1 block w-full"
+                        v-model="form.num_of_beds_per_room"
+                        required
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.num_of_beds_per_room"
+                    />
+                </div>
+                <div>
                     <InputLabel for="price" value="Price" />
                     <TextInput
                         id="price"
@@ -143,6 +174,8 @@ const form = useForm({
     hostel_id: "",
     type: "",
     price: "",
+    num_of_rooms: "",
+    num_of_beds_per_room: "",
     description: "",
     duration: "",
     image: "",

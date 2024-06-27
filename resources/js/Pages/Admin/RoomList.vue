@@ -24,7 +24,7 @@
                             }"
                             class="px-2 py-1 font-semibold leading-tight rounded-full"
                         >
-                            {{ room.status ? "Available" : "Full" }}
+                            {{ room.status ? "Available" : "Closed" }}
                         </span>
                     </td>
                     <td class="border px-4 py-2">{{ room.price }}</td>

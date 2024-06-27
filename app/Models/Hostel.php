@@ -11,6 +11,7 @@ class Hostel extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'number',
         'location',
         'description',
         'price',

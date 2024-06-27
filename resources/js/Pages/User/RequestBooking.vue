@@ -9,12 +9,14 @@
             </header>
             <div class="mb-4">
                 <p class="text-gray-700">
-                    <span class="font-bold">Applicant Name:</span> {{ user.name }}
+                    <span class="font-bold">Applicant Name:</span>
+                    {{ user.name }}
                 </p>
             </div>
             <div class="mb-4">
                 <p class="text-gray-700">
-                    <span class="font-bold">Room Type:</span> {{ room.type }} Room
+                    <span class="font-bold">Room Type:</span>
+                    {{ room.type }} Room
                 </p>
             </div>
             <div class="mb-4">
@@ -24,17 +26,26 @@
             </div>
             <div class="mb-4">
                 <p class="text-gray-700">
-                    <span class="font-bold">Duration:</span> Per {{ room.duration }}
+                    <span class="font-bold">Duration:</span> Per
+                    {{ room.duration }}
                 </p>
             </div>
             <div class="mb-4">
                 <p class="text-gray-700">
-                    <span class="font-bold">Hostel Name:</span> {{ room.hostel.name }}
+                    <span class="font-bold">Number of Beds Per Room:</span>
+                    {{ room.num_of_beds_per_room }}
                 </p>
             </div>
             <div class="mb-4">
                 <p class="text-gray-700">
-                    <span class="font-bold">Hostel Location:</span> {{ room.hostel.location }}
+                    <span class="font-bold">Hostel Name:</span>
+                    {{ room.hostel.name }}
+                </p>
+            </div>
+            <div class="mb-4">
+                <p class="text-gray-700">
+                    <span class="font-bold">Hostel Location:</span>
+                    {{ room.hostel.location }}
                 </p>
             </div>
 
@@ -48,7 +59,10 @@
                         v-model="form.check_in_date"
                         required
                     />
-                    <InputError class="mt-2" :message="form.errors.check_in_date" />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.check_in_date"
+                    />
                 </div>
 
                 <div>
@@ -60,12 +74,17 @@
                         v-model="form.check_out_date"
                         required
                     />
-                    <InputError class="mt-2" :message="form.errors.check_out_date" />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.check_out_date"
+                    />
                 </div>
 
                 <div class="flex items-center gap-4">
                     <div>
-                        <Button :disabled="form.processing">Request Booking</Button>
+                        <Button :disabled="form.processing"
+                            >Request Booking</Button
+                        >
                     </div>
 
                     <Transition
@@ -88,9 +107,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
-import { Head } from '@inertiajs/vue3';
+import { Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
@@ -109,12 +128,12 @@ const props = defineProps({
 });
 
 const form = useForm({
-    check_in_date: '',
-    check_out_date: '',
+    check_in_date: "",
+    check_out_date: "",
 });
 
 const submitForm = () => {
-    form.post(route('booking.store', { room_id: props.room.id }), {
+    form.post(route("booking.store", { room_id: props.room.id }), {
         onSuccess: () => {
             form.reset();
         },

@@ -25,6 +25,37 @@
                     <InputError class="mt-2" :message="form.errors.type" />
                 </div>
                 <div>
+                    <InputLabel for="num_of_rooms" value="Number of Rooms" />
+                    <TextInput
+                        id="num_of_rooms"
+                        type="number"
+                        class="mt-1 block w-full"
+                        v-model="form.num_of_rooms"
+                        required
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.num_of_rooms"
+                    />
+                </div>
+                <div>
+                    <InputLabel
+                        for="num_of_beds_per_room"
+                        value="Number of beds per Room"
+                    />
+                    <TextInput
+                        id="num_of_beds_per_room"
+                        type="number"
+                        class="mt-1 block w-full"
+                        v-model="form.num_of_beds_per_room"
+                        required
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.num_of_beds_per_room"
+                    />
+                </div>
+                <div>
                     <InputLabel for="price" value="Price" />
                     <TextInput
                         id="price"
@@ -34,6 +65,19 @@
                         required
                     />
                     <InputError class="mt-2" :message="form.errors.price" />
+                </div>
+                <div class="mt-4">
+                    <InputLabel for="duration" value="Duration" />
+                    <select
+                        id="duration"
+                        class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full"
+                        v-model="form.duration"
+                    >
+                        <option value="Month">Per Month</option>
+                        <option value="Semister">Per Semister</option>
+                        <option value="Six Months">Per Six Months</option>
+                    </select>
+                    <InputError class="mt-2" :message="form.errors.duration" />
                 </div>
                 <div class="mt-4">
                     <InputLabel for="hostelName" value="Hostel Name" />
@@ -75,13 +119,10 @@
                         class="mt-1 block w-full"
                     >
                         <option value="1">Available</option>
-                        <option value="0">Full</option>
+                        <option value="0">Close</option>
                     </SelectInput>
 
-                    <InputError
-                        class="mt-2"
-                        :message="form.errors.status"
-                    />
+                    <InputError class="mt-2" :message="form.errors.status" />
                 </div>
 
                 <div class="flex items-center gap-4">
@@ -117,8 +158,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import Button from "@/Components/Button.vue";
 import TextInput from "@/Components/TextInput.vue";
 import TextareaInput from "@/Components/TextareaInput.vue";
-import SelectInput from '@/Components/SelectInput.vue';
-
+import SelectInput from "@/Components/SelectInput.vue";
 
 const props = defineProps({
     room: {
@@ -135,6 +175,9 @@ const form = useForm({
     hostel_id: props.room.hostel_id,
     type: props.room.type,
     price: props.room.price,
+    duration: props.room.duration,
+    num_of_rooms: props.room.num_of_rooms,
+    num_of_beds_per_room: props.room.num_of_beds_per_room,
     status: props.room.status,
     description: props.room.description,
 });

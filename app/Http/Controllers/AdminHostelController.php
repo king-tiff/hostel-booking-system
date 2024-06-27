@@ -39,6 +39,7 @@ class AdminHostelController extends Controller
     {
         $formFields = $request->validate([
             'name' => 'required|string|max:255',
+            'number' => 'required|integer',
             'location' => 'required|string|max:255',
             'description' => 'nullable|string',
             'is_verified' => 'required|boolean',
@@ -62,7 +63,7 @@ class AdminHostelController extends Controller
             ]);
         }
 
-        return redirect('/admin/hostel/')->with('flash', 'Hostel created successfully.');
+        return redirect('/admin/hostels/')->with('flash', 'Hostel created successfully.');
     }
 
 
@@ -123,6 +124,7 @@ class AdminHostelController extends Controller
     {
         $formFields = $request->validate([
             'name' => 'required|string|max:255',
+            'number' => 'required|integer',
             'location' => 'required|string|max:255',
             'description' => 'nullable|string',
             'is_verified' => 'required|boolean',

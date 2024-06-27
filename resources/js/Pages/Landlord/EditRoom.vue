@@ -25,6 +25,37 @@
                     <InputError class="mt-2" :message="form.errors.type" />
                 </div>
                 <div>
+                    <InputLabel for="num_of_rooms" value="Number of Rooms" />
+                    <TextInput
+                        id="num_of_rooms"
+                        type="number"
+                        class="mt-1 block w-full"
+                        v-model="form.num_of_rooms"
+                        required
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.num_of_rooms"
+                    />
+                </div>
+                <div>
+                    <InputLabel
+                        for="num_of_beds_per_room"
+                        value="Number of beds per Room"
+                    />
+                    <TextInput
+                        id="num_of_beds_per_room"
+                        type="number"
+                        class="mt-1 block w-full"
+                        v-model="form.num_of_beds_per_room"
+                        required
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.num_of_beds_per_room"
+                    />
+                </div>
+                <div>
                     <InputLabel for="price" value="Price" />
                     <TextInput
                         id="price"
@@ -88,7 +119,7 @@
                         class="mt-1 block w-full"
                     >
                         <option value="1">Available</option>
-                        <option value="0">Full</option>
+                        <option value="0">Close</option>
                     </SelectInput>
 
                     <InputError
@@ -151,6 +182,8 @@ const form = useForm({
     status: props.room.status,
     duration: props.room.duration,
     description: props.room.description,
+    num_of_rooms: props.room.num_of_rooms,
+    num_of_beds_per_room: props.room.num_of_beds_per_room,
 });
 
 const submitForm = () => {

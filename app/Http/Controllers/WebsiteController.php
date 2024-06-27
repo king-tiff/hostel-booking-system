@@ -45,12 +45,18 @@ class WebsiteController extends Controller
      * Display the specified resource.
      */
     public function show($id)
-    {
-        $room = Room::with('hostel', 'images')->findOrFail($id);
-        return Inertia::render('Home/RoomShow', [
-            'room' => $room
-        ]);
-    }
+{
+    $room = Room::with('hostel', 'images')->findOrFail($id);
+    $availableSpaces = $room->availableSpaces();
+    $nextAvailableDate = $room->nextAvailableDate();
+
+    return Inertia::render('Home/RoomShow', [
+        'room' => $room,
+        'available_spaces' => $availableSpaces,
+        'next_available_date' => $nextAvailableDate,
+    ]);
+}
+
 
     /**
      * Show the form for editing the specified resource.

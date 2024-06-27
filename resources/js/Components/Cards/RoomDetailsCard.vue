@@ -30,8 +30,9 @@
                     >
                         <div class="flex-grow">
                             <p class="text-gray-700 mb-4">
-                                {{ room.hostel.name }} -
-                                {{ room.hostel.location }}
+                                <!-- {{ room.hostel.name }} -
+                                {{ room.hostel.location }} -->
+                                <span class="font-bold">Number of Beds Per Room: </span> {{ room.num_of_beds_per_room }}
                             </p>
                             <p class="text-black text-lg font-bold mb-0">
                                 {{ room.price }}/ Per {{ room.duration }}

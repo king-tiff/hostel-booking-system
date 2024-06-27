@@ -1,43 +1,135 @@
 <template>
-    <Head title="Dashboard" />
     <AuthenticatedLayout>
-        <section class="mx-auto bg-white rounded p-10">
-            <header>
-                <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">
-                    Landlord Dashboard
-                </h2>
-            </header>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                <!-- <Card title="Total Hostels" :count="totalHostels" />
-                <Card title="Total Rooms" :count="totalRooms" />
-                <Card title="Total Bookings" :count="totalBookings" /> -->
-            </div>
-
-        </section>
+        <div class="grid gap-6 mb-8 grid-cols-1 lg:grid-cols-4">
+            <Card
+                class="fill-main-primary"
+                label="Total Bookings"
+                :value="totalBooking"
+            >
+                <template v-slot:icon>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-book stroke-main-primary"
+                    >
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path
+                            d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                        ></path>
+                    </svg>
+                </template>
+            </Card>
+            <Card
+                class="fill-main-primary"
+                label="Pending Bookings"
+                :value="pendingBooking"
+            >
+                <template v-slot:icon>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-book stroke-main-primary"
+                    >
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path
+                            d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                        ></path>
+                    </svg>
+                </template>
+            </Card>
+            <Card
+                class="fill-main-primary"
+                label="Accepted Bookings"
+                :value="acceptedBooking"
+            >
+                <template v-slot:icon>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-book stroke-main-primary"
+                    >
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path
+                            d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                        ></path>
+                    </svg>
+                </template>
+            </Card>
+            <Card
+                class="fill-main-primary"
+                label="Rejected Bookings"
+                :value="rejectedBooking"
+            >
+                <template v-slot:icon>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-book stroke-main-primary"
+                    >
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path
+                            d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                        ></path>
+                    </svg>
+                </template>
+            </Card>
+        </div>
+        <BookingList :bookings="bookings" />
     </AuthenticatedLayout>
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { Head } from '@inertiajs/vue3';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import Card from '@/Components/Cards/Card.vue';
+import { computed } from "vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import Card from "@/Components/Cards/Card.vue";
+import BookingList from "./BookingList.vue";
 
 const props = defineProps({
-    hostels: Array,
+    bookings: Array,
 });
 
-const totalHostels = computed(() => {
-    return props.hostels.length;
+const totalBooking = computed(() => {
+    return props.bookings.length;
 });
 
-const totalRooms = computed(() => {
-    return props.hostels.reduce((acc, hostel) => acc + hostel.rooms.length, 0);
+const pendingBooking = computed(() => {
+    return props.bookings.filter((booking) => booking.status == 'Pending').length;
 });
 
-const totalBookings = computed(() => {
-    return props.hostels.reduce((acc, hostel) => acc + hostel.rooms.reduce((roomAcc, room) => roomAcc + room.bookings.length, 0), 0);
+const acceptedBooking = computed(() => {
+    return props.bookings.filter((booking) => booking.status == 'Accepted').length;
 });
+
+const rejectedBooking = computed(() => {
+    return props.bookings.filter((booking) => booking.status == 'Rejected').length;
+});
+
 </script>
-

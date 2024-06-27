@@ -21,6 +21,17 @@
                     <InputError class="mt-2" :message="form.errors.name" />
                 </div>
                 <div>
+                    <InputLabel for="number" value="Mobile Number" />
+                    <TextInput
+                        id="number"
+                        type="number"
+                        class="mt-1 block w-full rounded-none rounded-r-md"
+                        v-model="form.number"
+                        required
+                    />
+                    <InputError class="mt-2" :message="form.errors.number" />
+                </div>
+                <div>
                     <InputLabel for="location" value="Location" />
                     <TextInput
                         id="location"
@@ -109,6 +120,7 @@ const props = defineProps({
 
 const form = useForm({
     name: ref(props.hostels.name),
+    number: ref(props.hostels.number),
     location: ref(props.hostels.location),
     description: ref(props.hostels.description),
     is_verified: ref(props.hostels.is_verified)
