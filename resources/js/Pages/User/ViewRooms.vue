@@ -1,13 +1,23 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import RoomCategory from "../Home/Partials/RoomCategory.vue";
 import RoomDetailsCard from "@/Components/Cards/RoomDetailsCard.vue";
+
 const props = defineProps({
     rooms: {
+        type: Array,
+        required: true,
+    },
+    filters: {
         type: Object,
         required: true,
     },
-})
+    componentRoute: {
+        type: String,
+        default: "bookings.view",
+    },
+});
 </script>
 
 <template>
@@ -17,6 +27,11 @@ const props = defineProps({
         <div
             class="relative bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-main-primary selection:text-white min-h-screen"
         >
+        <RoomCategory
+                :rooms="rooms"
+                :filters="filters"
+                :componentRoute="componentRoute"
+            />
             <RoomDetailsCard :rooms="rooms" />
         </div>
     </AuthenticatedLayout>

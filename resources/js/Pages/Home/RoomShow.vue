@@ -1,8 +1,8 @@
 <template>
     <Head title="Room Detail" />
 
-    <UnauthenticatedLayout>
-        <div class="max-w-4xl mx-auto my-10">
+    <AuthenticatedLayout>
+        <div class="mx-auto bg-white rounded p-10">
             <div class="mb-8">
                 <h1 class="text-3xl font-semibold mb-4">
                     {{ room.type }} Room
@@ -46,7 +46,7 @@
             </div>
 
             <div class="mt-4 flex items-center">
-                <Link :href="route('home')" class="text-blue-500 mr-2">
+                <Link :href="route('bookings.view')" class="text-blue-500 mr-2">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -66,12 +66,12 @@
                 <span>Back to Rooms</span>
             </div>
         </div>
-    </UnauthenticatedLayout>
+    </AuthenticatedLayout>
 </template>
 
 <script setup>
 import { Link } from "@inertiajs/vue3";
-import UnauthenticatedLayout from "@/Layouts/UnauthenticatedLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { format, addDays } from "date-fns";
 
 const props = defineProps({
