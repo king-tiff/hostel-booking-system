@@ -31,18 +31,48 @@ class BookingController extends Controller
     /**
      * Display all Available resources.
      */
-    public function view()
+    public function view(Request $request)
     {
-        $rooms = Room::where('status', true)
-            ->whereHas('hostel', function ($query) {
-                $query->where('is_verified', true);
-            })
-            ->with(['images', 'hostel'])
-            ->get();
+        // $rooms = Room::where('status', true)
+        //     ->whereHas('hostel', function ($query) {
+        //         $query->where('is_verified', true);
+        //     })
+        //     ->with(['images', 'hostel'])
+        //     ->get();
 
-        return Inertia::render('User/ViewRooms', [
-            'rooms' => $rooms,
-        ]);
+        // return Inertia::render('User/ViewRooms', [
+        //     'rooms' => $rooms,
+        // ]);
+        $query = Room::where('status', true)
+        ->whereHas('hostel', function ($query) {
+            $query->where('is_verified', true);
+        })
+        ->with(['images', 'hostel']);
+
+    if ($request->has('price')) {
+        $query->where('price', '<=', $request->input('price'));
+    }
+
+    if ($request->has('location')) {
+        $query->whereHas('hostel', function($q) use ($request) {
+            $q->where('location', 'like', '%' . $request->input('location') . '%');
+        });
+    }
+
+    if ($request->has('type')) {
+        $query->where('type', $request->input('type'));
+    }
+
+    if ($request->has('num_of_beds')) {
+        $query->where('num_of_beds', $request->input('num_of_beds'));
+    }
+
+    $rooms = $query->get();
+
+    return Inertia::render('User/ViewRooms', [
+        'rooms' => $rooms,
+        'filters' => $request->all(),
+    ]);
     }
 
     /**

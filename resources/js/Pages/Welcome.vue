@@ -2,6 +2,7 @@
 import { Head, Link } from "@inertiajs/vue3";
 import UnauthenticatedLayout from "@/Layouts/UnauthenticatedLayout.vue";
 import Hero from "./Home/Partials/Hero.vue";
+import RoomCategory from "./Home/Partials/RoomCategory.vue";
 import RoomDetailsCard from "@/Components/Cards/RoomDetailsCard.vue";
 import FeatureSection from "./Home/Partials/FeatureSection.vue";
 import TestimonialSection from "./Home/Partials/TestimonialSection.vue";
@@ -16,8 +17,16 @@ import TestimonialSection from "./Home/Partials/TestimonialSection.vue";
 });
 const props = defineProps({
     rooms: {
+        type: Array,
+        required: true,
+    },
+    filters: {
         type: Object,
         required: true,
+    },
+    componentRoute: {
+        type: String,
+        default: "home",
     },
 });
 </script>
@@ -31,6 +40,11 @@ const props = defineProps({
         >
             <Hero />
             <FeatureSection />
+            <RoomCategory
+                :rooms="rooms"
+                :filters="filters"
+                :componentRoute="componentRoute"
+            />
             <RoomDetailsCard :rooms="rooms" />
             <TestimonialSection />
         </div>
@@ -47,7 +61,3 @@ const props = defineProps({
     }
 }
 </style>
-
-
-
-  

@@ -10,17 +10,31 @@
 
             <form @submit.prevent="submitForm" class="mt-6 space-y-6">
                 <div class="mt-4">
+                    <InputLabel for="hostelName" value="Hostel Name" />
+                    <select
+                        id="hostelName"
+                        class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                        v-model="form.hostel_id"
+                    >
+                        <option
+                            v-for="(item, index) in hostels"
+                            :key="index"
+                            :value="item.id"
+                        >
+                            {{ item.name }}
+                        </option>
+                    </select>
+                    <InputError class="mt-2" :message="form.errors.hostel_id" />
+                </div>
+                <div class="mt-4">
                     <InputLabel for="roomType" value="Room Type" />
                     <select
                         id="roomType"
                         class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full"
                         v-model="form.type"
                     >
-                        <option value="Master">Master Room</option>
-                        <option value="Single">Single Room</option>
-                        <option value="Double">Double Room</option>
-                        <option value="Triple">Triple Room</option>
-                        <option value="Quadruple">Quadruple Room</option>
+                        <option value="Self Contain">Self Contain Room</option>
+                        <option value="Shared">Shared Room</option>
                     </select>
                     <InputError class="mt-2" :message="form.errors.type" />
                 </div>
@@ -79,23 +93,6 @@
                     </select>
                     <InputError class="mt-2" :message="form.errors.duration" />
                 </div>
-                <div class="mt-4">
-                    <InputLabel for="hostelName" value="Hostel Name" />
-                    <select
-                        id="hostelName"
-                        class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                        v-model="form.hostel_id"
-                    >
-                        <option
-                            v-for="(item, index) in hostels"
-                            :key="index"
-                            :value="item.id"
-                        >
-                            {{ item.name }}
-                        </option>
-                    </select>
-                    <InputError class="mt-2" :message="form.errors.hostel_id" />
-                </div>
 
                 <div>
                     <InputLabel for="description" value="Description" />
@@ -122,10 +119,7 @@
                         <option value="0">Close</option>
                     </SelectInput>
 
-                    <InputError
-                        class="mt-2"
-                        :message="form.errors.status"
-                    />
+                    <InputError class="mt-2" :message="form.errors.status" />
                 </div>
 
                 <div class="flex items-center gap-4">
@@ -161,8 +155,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import Button from "@/Components/Button.vue";
 import TextInput from "@/Components/TextInput.vue";
 import TextareaInput from "@/Components/TextareaInput.vue";
-import SelectInput from '@/Components/SelectInput.vue';
-
+import SelectInput from "@/Components/SelectInput.vue";
 
 const props = defineProps({
     room: {

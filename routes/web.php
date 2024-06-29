@@ -29,6 +29,7 @@ use Inertia\Inertia;
 
 Route::get('/', [WebsiteController::class, 'index'])->name('home');
 
+Route::get('/rooms', [WebsiteController::class, 'filtering'])->name('rooms.filtering');
 
 Route::middleware('auth')->group(function () {
     Route::get('/rooms/{id}', [WebsiteController::class, 'show'])->name('room.show');

@@ -11,19 +11,53 @@ class WebsiteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $rooms = Room::where('status', true)
-            ->whereHas('hostel', function ($query) {
-                $query->where('is_verified', true);
-            })
-            ->with(['images', 'hostel'])
-            ->get();
+    // public function index()
+    // {
+    //     $rooms = Room::where('status', true)
+    //         ->whereHas('hostel', function ($query) {
+    //             $query->where('is_verified', true);
+    //         })
+    //         ->with(['images', 'hostel'])
+    //         ->get();
             
-        return Inertia::render('Welcome', [
-            'rooms' => $rooms,
-        ]);
+    //     return Inertia::render('Welcome', [
+    //         'rooms' => $rooms,
+    //     ]);
+    // }
+    public function index(Request $request)
+{
+    $query = Room::where('status', true)
+        ->whereHas('hostel', function ($query) {
+            $query->where('is_verified', true);
+        })
+        ->with(['images', 'hostel']);
+
+    if ($request->has('price')) {
+        $query->where('price', '<=', $request->input('price'));
     }
+
+    if ($request->has('location')) {
+        $query->whereHas('hostel', function($q) use ($request) {
+            $q->where('location', 'like', '%' . $request->input('location') . '%');
+        });
+    }
+
+    if ($request->has('type')) {
+        $query->where('type', $request->input('type'));
+    }
+
+    if ($request->has('num_of_beds')) {
+        $query->where('num_of_beds', $request->input('num_of_beds'));
+    }
+
+    $rooms = $query->get();
+
+    return Inertia::render('Welcome', [
+        'rooms' => $rooms,
+        'filters' => $request->all(),
+    ]);
+}
+
 
     /**
      * Show the form for creating a new resource.
