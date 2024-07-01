@@ -38,8 +38,8 @@
                         class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full"
                         v-model="form.type"
                     >
-                        <option value="Master">Self Contain Room</option>
-                        <option value="Single">Shared Room</option>
+                        <option value="Self Contain">Self Contain Room</option>
+                        <option value="Shared">Shared Room</option>
                     </select>
                     <InputError class="mt-2" :message="form.errors.type" />
                 </div>

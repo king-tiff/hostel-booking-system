@@ -42,6 +42,8 @@ class AdminHostelController extends Controller
             'number' => 'required|integer',
             'location' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'payment_method' => 'required|string|max:255',
+            'payment_number' => 'required|integer',
             'is_verified' => 'required|boolean',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
 
@@ -72,7 +74,7 @@ class AdminHostelController extends Controller
      */
     public function show($id)
     {
-        $hostel = Hostel::with('images','user')->findOrFail($id);
+        $hostel = Hostel::with('images', 'user')->findOrFail($id);
         return Inertia::render('Admin/HostelDetail', ['hostel' => $hostel]);
     }
 
@@ -126,6 +128,8 @@ class AdminHostelController extends Controller
             'name' => 'required|string|max:255',
             'number' => 'required|integer',
             'location' => 'required|string|max:255',
+            'payment_method' => 'required|string|max:255',
+            'payment_number' => 'required|integer',
             'description' => 'nullable|string',
             'is_verified' => 'required|boolean',
         ]);

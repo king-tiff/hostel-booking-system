@@ -39,6 +39,8 @@ class LandlordHostelController extends Controller
             'number' => 'required|integer',
             'location' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'payment_method' => 'required|string|max:255',
+            'payment_number' => 'required|integer',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -122,6 +124,8 @@ class LandlordHostelController extends Controller
             'number' => 'required|integer',
             'location' => 'required',
             'description' => 'required',
+            'payment_method' => 'required|string|max:255',
+            'payment_number' => 'required|integer',
 
         ]);
 

@@ -3,7 +3,7 @@
         <table class="w-full table-auto">
             <thead>
                 <tr>
-                    <th class="px-4 py-2">Hostel Name</th>
+                    <th class="px-4 py-2">Number of Beds</th>
                     <th class="px-4 py-2">Room Type</th>
                     <th class="px-4 py-2">Status</th>
                     <th class="px-4 py-2">Price</th>
@@ -13,7 +13,7 @@
             </thead>
             <tbody>
                 <tr v-for="(room, index) in rooms" :key="index">
-                    <td class="border px-4 py-2">{{ room.hostel.name }}</td>
+                    <td class="border px-4 py-2">{{ room.num_of_beds_per_room }}</td>
                     <td class="border px-4 py-2">{{ room.type }} Bed</td>
                     <td class="border px-4 py-2">
                         <span

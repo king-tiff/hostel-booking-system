@@ -57,6 +57,38 @@
                         :message="form.errors.description"
                     />
                 </div>
+                <div class="mt-4">
+                    <InputLabel for="payment_method" value="Payment Method" />
+                    <select
+                        id="payment_method"
+                        class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full"
+                        v-model="form.payment_method"
+                    >
+                        <option value="Visa">Visa</option>
+                        <option value="Tigo Pesa">Tigo Pesa</option>
+                        <option value="M-pesa">M-pesa</option>
+                        <option value="Airtel Money">Airtel Money</option>
+                        <option value="Halo Pesa">Halo Pesa</option>
+                    </select>
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.payment_method"
+                    />
+                </div>
+                <div>
+                    <InputLabel for="payment_number" value="Payment Number" />
+                    <TextInput
+                        id="payment_number"
+                        type="number"
+                        class="mt-1 block w-full rounded-none rounded-r-md"
+                        v-model="form.payment_number"
+                        required
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.payment_number"
+                    />
+                </div>
 
                 <div>
                     <InputLabel for="is_verified" value="Verification Status" />
@@ -109,7 +141,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import Button from "@/Components/Button.vue";
 import TextInput from "@/Components/TextInput.vue";
 import TextareaInput from "@/Components/TextareaInput.vue";
-import SelectInput from '@/Components/SelectInput.vue';
+import SelectInput from "@/Components/SelectInput.vue";
 
 const props = defineProps({
     hostels: {
@@ -123,7 +155,9 @@ const form = useForm({
     number: ref(props.hostels.number),
     location: ref(props.hostels.location),
     description: ref(props.hostels.description),
-    is_verified: ref(props.hostels.is_verified)
+    payment_method: ref(props.hostels.payment_method),
+    payment_number: ref(props.hostels.payment_number),
+    is_verified: ref(props.hostels.is_verified),
 });
 
 const submitForm = () => {

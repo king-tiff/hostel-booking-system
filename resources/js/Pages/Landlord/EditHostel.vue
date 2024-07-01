@@ -57,7 +57,38 @@
                         :message="form.errors.description"
                     />
                 </div>
-
+                <div class="mt-4">
+                    <InputLabel for="payment_method" value="Payment Method" />
+                    <select
+                        id="payment_method"
+                        class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full"
+                        v-model="form.payment_method"
+                    >
+                        <option value="Visa">Visa</option>
+                        <option value="Tigo Pesa">Tigo Pesa</option>
+                        <option value="M-pesa">M-pesa</option>
+                        <option value="Airtel Money">Airtel Money</option>
+                        <option value="Halo Pesa">Halo Pesa</option>
+                    </select>
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.payment_method"
+                    />
+                </div>
+                <div>
+                    <InputLabel for="payment_number" value="Payment Number" />
+                    <TextInput
+                        id="payment_number"
+                        type="number"
+                        class="mt-1 block w-full rounded-none rounded-r-md"
+                        v-model="form.payment_number"
+                        required
+                    />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.payment_number"
+                    />
+                </div>
                 <div class="flex items-center gap-4">
                     <div>
                         <Button :disabled="form.processing"
@@ -106,6 +137,8 @@ const form = useForm({
     number: ref(props.hostels.number),
     location: ref(props.hostels.location),
     description: ref(props.hostels.description),
+    payment_method: ref(props.hostels.payment_method),
+    payment_number: ref(props.hostels.payment_number),
 });
 
 const submitForm = () => {
