@@ -15,6 +15,8 @@ class Hostel extends Model
         'location',
         'description',
         'price',
+        'payment_method',
+        'payment_number',
         'image',
         'is_verified',
         'user_id',

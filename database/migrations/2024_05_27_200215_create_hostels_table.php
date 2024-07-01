@@ -17,6 +17,8 @@ return new class extends Migration
             $table->bigInteger('number');
             $table->string('location');
             $table->text('description')->nullable();
+            $table->string('payment_method')->nullable();
+            $table->bigInteger('payment_number')->nullable();
             $table->string('image')->nullable();
             $table->boolean('is_verified')->default(false);
             $table->unsignedBigInteger("user_id");

@@ -67,14 +67,50 @@
                 </p>
             </div>
 
-            <div v-if="booking.status == 'Approved'" class="mb-4">
+            <div class="mt-4">
                 <p class="text-gray-700">
                     <span class="font-bold">Mobile Number:</span>
                     {{ booking.room.hostel.number }}
                 </p>
             </div>
-
             <div v-if="booking.status == 'Approved'" class="mt-4">
+                <div class="mt-4">
+                    <p class="text-gray-700">
+                        <span class="font-bold">Payment Method:</span>
+                        {{ booking.room.hostel.payment_method }}
+                    </p>
+                </div>
+
+                <div class="mt-4">
+                    <p class="text-gray-700">
+                        <span class="font-bold">Payment Number:</span>
+                        {{ booking.room.hostel.payment_number }}
+                    </p>
+                </div>
+
+                <div class="mt-4 p-6 bg-white shadow-md rounded-lg">
+                    <p class="text-gray-700 text-lg">
+                        <span class="text-green-600 font-semibold"
+                            >Congratulations!</span
+                        >
+                        Your booking at
+                        <span class="font-bold">{{
+                            booking.room.hostel.name
+                        }}</span>
+                        has been successfully approved. Please proceed with the
+                        payment using the
+                        <span class="font-bold">{{
+                            booking.room.hostel.payment_method
+                        }}</span>
+                        number
+                        <span class="font-bold">{{
+                            booking.room.hostel.payment_number
+                        }}</span
+                        >. After completing the payment, contact the admin for
+                        room allocation.
+                    </p>
+                </div>
+
                 <a
                     :href="route('bookings.download', booking.id)"
                     class="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg"

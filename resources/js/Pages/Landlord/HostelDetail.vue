@@ -3,9 +3,6 @@
         <Head :title="`Hostel: ${hostel.name}`" />
         <div class="p-6 bg-white rounded-lg shadow-md mb-6">
             <h1 class="text-2xl font-bold mb-4">{{ hostel.name }}</h1>
-            <p class="mb-4"><span class="font-bold">Description: </span>{{ hostel.description }}</p>
-            <p class="mb-4"><span class="font-bold">Mobile Number: </span>{{ hostel.number }}</p>
-
             <div class="mb-4">
                 <h2 class="text-xl font-semibold mb-2">Images</h2>
                 <div
@@ -43,7 +40,35 @@
                     </div>
                 </div>
             </div>
-
+            <p class="mb-4">
+                <span class="font-bold">Description: </span
+                >{{ hostel.description }}
+            </p>
+            <p class="mb-4">
+                <span class="font-bold">Mobile Number: </span
+                >{{ hostel.number }}
+            </p>
+            <p class="mb-4">
+                <span class="font-bold">Payment Method: </span
+                >{{ hostel.payment_method }}
+            </p>
+            <p class="mb-4">
+                <span class="font-bold">Payment Number: </span
+                >{{ hostel.payment_number }}
+            </p>
+            <p class="mb-4">
+                <span class="font-bold"> Status: </span
+                ><span
+                    :class="{
+                        'text-green-600 bg-green-100/90': hostel.is_verified,
+                        'text-main-primary bg-main-secondary':
+                            !hostel.is_verified,
+                    }"
+                    class="px-2 py-1 font-semibold leading-tight rounded-full"
+                >
+                    {{ hostel.is_verified ? "Verified" : "Pending" }}
+                </span>
+            </p>
             <form
                 @submit.prevent="submitForm"
                 enctype="multipart/form-data"

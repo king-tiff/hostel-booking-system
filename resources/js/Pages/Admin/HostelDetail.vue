@@ -50,6 +50,14 @@
                 <span class="font-bold">Hostel Description: </span
                 >{{ hostel.description }}
             </p>
+            <p class="mb-4">
+                <span class="font-bold">Payment Method: </span
+                >{{ hostel.payment_method }}
+            </p>
+            <p class="mb-4">
+                <span class="font-bold">Payment Number: </span
+                    >{{ hostel.payment_number }}
+                </p>
 
             <form
                 @submit.prevent="submitForm"
